@@ -20,6 +20,8 @@ using Microsoft.IdentityModel.Tokens;
 using System.Text;
 using API.Extensions;
 using API.Middleware;
+using Microsoft.AspNetCore.Identity;
+using System.Security.Claims;
 
 namespace API
 {
@@ -36,6 +38,8 @@ namespace API
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddApplicationService(Configuration);
+            services.Configure<IdentityOptions>(options => 
+               options.ClaimsIdentity.UserIdClaimType = ClaimTypes.NameIdentifier);
 
             services.AddControllers();
             services.AddCors();
@@ -44,6 +48,7 @@ namespace API
             {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "WebAPIv5", Version = "v1" });
             });
+            
             
         }
 
